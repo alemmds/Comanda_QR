@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panificadora Bacanga</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Favicon configuration from RealFaviconGenerator -->
+    <!-- Favicon configuration -->
     <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -49,51 +49,51 @@
         <section id="mesas">
             <h3>Pedidos por Mesa</h3>
             
-            <!-- Estrutura para a mesa 1 -->
-            <div id="mesa-total-1">
-                <h4>Mesa 1</h4>
-                <ul id="lista-pedidos-mesa-1"></ul>
-                <p id="total-mesa-1"></p>
-                <div id="qrcode-mesa-1"></div>
-            </div>
+            <div class="mesa-container">
+                <div class="mesa" id="mesa-1">
+                    <h4>Mesa 1</h4>
+                    <ul id="lista-pedidos-mesa-1"></ul>
+                    <p id="total-mesa-1">Valor Total: R$ 0.00</p>
+                    <div id="qrcode-mesa-1" class="qrcode"></div>
+                    <button id="download-qr-mesa-1" disabled>Download QR</button>
+                </div>
 
-            <!-- Estrutura para a mesa 2 -->
-            <div id="mesa-total-2">
-                <h4>Mesa 2</h4>
-                <ul id="lista-pedidos-mesa-2"></ul>
-                <p id="total-mesa-2"></p>
-                <div id="qrcode-mesa-2"></div>
-            </div>
+                <div class="mesa" id="mesa-2">
+                    <h4>Mesa 2</h4>
+                    <ul id="lista-pedidos-mesa-2"></ul>
+                    <p id="total-mesa-2">Valor Total: R$ 0.00</p>
+                    <div id="qrcode-mesa-2" class="qrcode"></div>
+                    <button id="download-qr-mesa-2" disabled>Download QR</button>
+                </div>
 
-            <!-- Estrutura para a mesa 3 -->
-            <div id="mesa-total-3">
-                <h4>Mesa 3</h4>
-                <ul id="lista-pedidos-mesa-3"></ul>
-                <p id="total-mesa-3"></p>
-                <div id="qrcode-mesa-3"></div>
-            </div>
+                <div class="mesa" id="mesa-3">
+                    <h4>Mesa 3</h4>
+                    <ul id="lista-pedidos-mesa-3"></ul>
+                    <p id="total-mesa-3">Valor Total: R$ 0.00</p>
+                    <div id="qrcode-mesa-3" class="qrcode"></div>
+                    <button id="download-qr-mesa-3" disabled>Download QR</button>
+                </div>
 
-            <!-- Estrutura para a mesa 4 -->
-            <div id="mesa-total-4">
-                <h4>Mesa 4</h4>
-                <ul id="lista-pedidos-mesa-4"></ul>
-                <p id="total-mesa-4"></p>
-                <div id="qrcode-mesa-4"></div>
-            </div>
+                <div class="mesa" id="mesa-4">
+                    <h4>Mesa 4</h4>
+                    <ul id="lista-pedidos-mesa-4"></ul>
+                    <p id="total-mesa-4">Valor Total: R$ 0.00</p>
+                    <div id="qrcode-mesa-4" class="qrcode"></div>
+                    <button id="download-qr-mesa-4" disabled>Download QR</button>
+                </div>
 
-            <!-- Estrutura para a mesa 5 -->
-            <div id="mesa-total-5">
-                <h4>Mesa 5</h4>
-                <ul id="lista-pedidos-mesa-5"></ul>
-                <p id="total-mesa-5"></p>
-                <div id="qrcode-mesa-5"></div>
+                <div class="mesa" id="mesa-5">
+                    <h4>Mesa 5</h4>
+                    <ul id="lista-pedidos-mesa-5"></ul>
+                    <p id="total-mesa-5">Valor Total: R$ 0.00</p>
+                    <div id="qrcode-mesa-5" class="qrcode"></div>
+                    <button id="download-qr-mesa-5" disabled>Download QR</button>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- Importando o app.js para manipular a lógica da aplicação -->
     <script src="app.js"></script>
-    <!-- Importando a biblioteca para gerar o QR Code -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
