@@ -5,53 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panificadora Bacanga</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="/site.webmanifest">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <!-- Favicon configuration from RealFaviconGenerator -->
     <link rel="icon" type="image/png" href="/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Bacanga " />
+    <meta name="apple-mobile-web-app-title" content="Bacanga" />
+    <link rel="manifest" href="/site.webmanifest" />
 </head>
 <body>
     <header>
         <h1>Panificadora Bacanga</h1>
-        <img src="logo.png" alt="Logo da Panificadora Bacanga" id="logo">
     </header>
-    
+
     <main>
-        <section id="mesa-section">
-            <h2>Selecione a Mesa</h2>
-            <div id="mesas">
-                <button onclick="selecionarMesa(1)">Mesa 1</button>
-                <button onclick="selecionarMesa(2)">Mesa 2</button>
-                <button onclick="selecionarMesa(3)">Mesa 3</button>
-                <button onclick="selecionarMesa(4)">Mesa 4</button>
-                <button onclick="selecionarMesa(5)">Mesa 5</button>
-            </div>
+        <h2>Gerenciamento de Mesas</h2>
+
+        <!-- Formulário para adicionar pedidos -->
+        <section id="adicionar-pedido">
+            <h3>Adicionar Pedido</h3>
+            <label for="mesa-selecao">Selecione a mesa:</label>
+            <select id="mesa-selecao">
+                <option value="1">Mesa 1</option>
+                <option value="2">Mesa 2</option>
+                <option value="3">Mesa 3</option>
+                <option value="4">Mesa 4</option>
+                <option value="5">Mesa 5</option>
+            </select>
+
+            <label for="nome-lanche">Nome do Lanche:</label>
+            <input type="text" id="nome-lanche" placeholder="Digite o nome do lanche">
+
+            <label for="preco-lanche">Preço:</label>
+            <input type="number" id="preco-lanche" placeholder="Digite o valor" step="0.01">
+
+            <label for="quantidade-lanche">Quantidade:</label>
+            <input type="number" id="quantidade-lanche" placeholder="Digite a quantidade" min="1" value="1">
+
+            <button id="adicionar-btn">Adicionar Pedido</button>
         </section>
 
-        <section id="pedido-section">
-            <h2>Cadastro de Lanches</h2>
-            <div>
-                <label for="nome-lanche">Nome do Lanche:</label>
-                <input type="text" id="nome-lanche">
+        <!-- Área para exibir os pedidos e valores por mesa -->
+        <section id="mesas">
+            <h3>Pedidos por Mesa</h3>
+            
+            <!-- Estrutura para a mesa 1 -->
+            <div id="mesa-total-1">
+                <h4>Mesa 1</h4>
+                <ul id="lista-pedidos-mesa-1"></ul>
+                <p id="total-mesa-1"></p>
+                <div id="qrcode-mesa-1"></div>
             </div>
-            <div>
-                <label for="valor-lanche">Valor:</label>
-                <input type="number" id="valor-lanche">
-            </div>
-            <button id="confirmar-btn" onclick="adicionarPedido()">Confirmar</button>
-        </section>
 
-        <section id="pedidos-section">
-            <h2>Pedidos por Mesa</h2>
-            <div id="pedidos"></div>
+            <!-- Estrutura para a mesa 2 -->
+            <div id="mesa-total-2">
+                <h4>Mesa 2</h4>
+                <ul id="lista-pedidos-mesa-2"></ul>
+                <p id="total-mesa-2"></p>
+                <div id="qrcode-mesa-2"></div>
+            </div>
+
+            <!-- Estrutura para a mesa 3 -->
+            <div id="mesa-total-3">
+                <h4>Mesa 3</h4>
+                <ul id="lista-pedidos-mesa-3"></ul>
+                <p id="total-mesa-3"></p>
+                <div id="qrcode-mesa-3"></div>
+            </div>
+
+            <!-- Estrutura para a mesa 4 -->
+            <div id="mesa-total-4">
+                <h4>Mesa 4</h4>
+                <ul id="lista-pedidos-mesa-4"></ul>
+                <p id="total-mesa-4"></p>
+                <div id="qrcode-mesa-4"></div>
+            </div>
+
+            <!-- Estrutura para a mesa 5 -->
+            <div id="mesa-total-5">
+                <h4>Mesa 5</h4>
+                <ul id="lista-pedidos-mesa-5"></ul>
+                <p id="total-mesa-5"></p>
+                <div id="qrcode-mesa-5"></div>
+            </div>
         </section>
     </main>
 
+    <!-- Importando o app.js para manipular a lógica da aplicação -->
     <script src="app.js"></script>
+    <!-- Importando a biblioteca para gerar o QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 </html>
