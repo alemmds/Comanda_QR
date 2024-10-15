@@ -39,6 +39,34 @@ function exibirPedidosPorMesa(mesa) {
     });
 
     pedidosDiv.innerHTML += `<p><strong>Total: R$ ${total.toFixed(2)}</strong></p>`;
+    pedidosDiv.innerHTML += `<button onclick="gerarQRCode(${mesa})">DOWNLOAD QR</button>`;
+}
+
+function gerarQRCode(mesa) {
+    const pedidosMesa = pedidos[mesa];
+    let resumo = `Mesa ${mesa}\n`;
+
+    pedidosMesa.forEach(pedido => {
+        resumo += `${pedido.nome} - R$ ${pedido.valor.toFixed(2)}\n`;
+    });
+
+    let total = pedidosMesa.reduce((acc, pedido) => acc + pedido.valor, 0);
+    resumo += `Total: R$ ${total.toFixed(2)}`;
+
+    // Gerar o QR Code
+    $('#qrcode').remove(); // Remove QR code anterior
+    $('<div id="qrcode"></div>').appendTo('#pedidos'); // Adiciona novo QR code
+    $('#qrcode').qrcode({
+        text: resumo
+    });
+    
+    // Baixar o QR Code
+    html2canvas(document.querySelector("#qrcode")).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'qrcode-mesa-' + mesa + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
 }
 
 function alterarPedido(mesa, index) {
