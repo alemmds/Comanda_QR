@@ -1,92 +1,34 @@
-// Função para adicionar um pedido a uma mesa
-function adicionarPedido(mesaNumero, nome, preco, quantidade) {
-    // Verifica se a mesa já tem pedidos armazenados
-    let pedidos = JSON.parse(localStorage.getItem(`mesa-${mesaNumero}`)) || [];
-    
-    // Adiciona o novo pedido à lista de pedidos da mesa
-    pedidos.push({ nome, preco, quantidade });
-    
-    // Atualiza o localStorage com os pedidos da mesa
-    localStorage.setItem(`mesa-${mesaNumero}`, JSON.stringify(pedidos));
-    
-    // Atualiza o valor total e a lista de pedidos no DOM
-    atualizarMesa(mesaNumero);
-}
+document.getElementById('adicionar-btn').addEventListener('click', function() {
+    const mesa = document.getElementById('mesa-selecao').value;
+    const nomeLanche = document.getElementById('nome-lanche').value;
+    const precoLanche = parseFloat(document.getElementById('preco-lanche').value);
+    const quantidadeLanche = parseInt(document.getElementById('quantidade-lanche').value);
 
-// Função para atualizar a exibição dos pedidos e o total da mesa
-function atualizarMesa(mesaNumero) {
-    const pedidos = JSON.parse(localStorage.getItem(`mesa-${mesaNumero}`)) || [];
-    const listaPedidos = document.getElementById(`lista-pedidos-mesa-${mesaNumero}`);
-    const totalElement = document.getElementById(`total-mesa-${mesaNumero}`);
-    let total = 0;
+    if (!nomeLanche || isNaN(precoLanche) || isNaN(quantidadeLanche)) {
+        alert('Preencha todos os campos corretamente!');
+        return;
+    }
 
-    // Limpa a lista atual de pedidos no DOM
-    listaPedidos.innerHTML = '';
+    const listaPedidos = document.getElementById(`lista-pedidos-mesa-${mesa}`);
+    const novoPedido = document.createElement('li');
+    novoPedido.textContent = `${nomeLanche} - R$${(precoLanche * quantidadeLanche).toFixed(2)} (${quantidadeLanche})`;
+    listaPedidos.appendChild(novoPedido);
 
-    // Adiciona cada pedido à lista e soma o valor total
-    pedidos.forEach(pedido => {
-        const li = document.createElement('li');
-        li.innerText = `${pedido.quantidade}x ${pedido.nome} - R$ ${(pedido.preco * pedido.quantidade).toFixed(2)}`;
-        listaPedidos.appendChild(li);
-        total += pedido.preco * pedido.quantidade;
-    });
+    // Atualizar total da mesa
+    const totalMesa = document.getElementById(`total-mesa-${mesa}`);
+    const valorAtual = parseFloat(totalMesa.textContent.replace('Valor Total: R$', ''));
+    const novoTotal = valorAtual + (precoLanche * quantidadeLanche);
+    totalMesa.textContent = `Valor Total: R$ ${novoTotal.toFixed(2)}`;
 
-    // Exibe o valor total no DOM
-    totalElement.innerText = `Valor Total: R$ ${total.toFixed(2)}`;
+    // Habilitar botão de Download QR e gerar QR Code
+    const qrButton = document.getElementById(`download-qr-mesa-${mesa}`);
+    qrButton.disabled = false;
 
-    // Atualiza o QR Code para a mesa
-    gerarQRCode(mesaNumero);
-}
-
-// Função para gerar o QR Code com o link para o resumo da mesa
-function gerarQRCode(mesaNumero) {
-    const qrCodeContainer = document.getElementById(`qrcode-mesa-${mesaNumero}`);
-    const urlMesa = `${window.location.origin}/resumo.html?mesa=${mesaNumero}`;
-    
-    // Limpa o conteúdo anterior do QR Code, caso exista
-    qrCodeContainer.innerHTML = "";
-
-    // Gerar o QR Code com o link para o resumo da mesa
-    new QRCode(qrCodeContainer, {
-        text: urlMesa,
+    const qrcodeDiv = document.getElementById(`qrcode-mesa-${mesa}`);
+    qrcodeDiv.innerHTML = ''; // Limpar QR Code anterior
+    const qr = new QRCode(qrcodeDiv, {
+        text: `Resumo da Mesa ${mesa} - Total: R$${novoTotal.toFixed(2)}`,
         width: 128,
         height: 128,
     });
-}
-
-// Função para adicionar os botões de gerar QR Code e listar pedidos para cada mesa
-function adicionarBotoesQRCode() {
-    for (let mesaNumero = 1; mesaNumero <= 5; mesaNumero++) {
-        const botao = document.createElement('button');
-        botao.innerText = "Download QR";
-        botao.onclick = () => gerarQRCode(mesaNumero);
-
-        // Adicionar o botão ao lado do total da mesa
-        const mesaDiv = document.getElementById(`mesa-total-${mesaNumero}`);
-        mesaDiv.appendChild(botao);
-
-        // Adicionar um container para exibir o QR Code
-        const qrCodeContainer = document.createElement('div');
-        qrCodeContainer.id = `qrcode-mesa-${mesaNumero}`;
-        mesaDiv.appendChild(qrCodeContainer);
-    }
-}
-
-// Função para inicializar as mesas ao carregar a página
-function inicializarMesas() {
-    for (let mesaNumero = 1; mesaNumero <= 5; mesaNumero++) {
-        atualizarMesa(mesaNumero);
-    }
-}
-
-// Chama a função para adicionar os botões e inicializar as mesas quando a página for carregada
-window.onload = function() {
-    adicionarBotoesQRCode();
-    inicializarMesas();
-};
-
-// Função para limpar os pedidos de uma mesa
-function limparMesa(mesaNumero) {
-    localStorage.removeItem(`mesa-${mesaNumero}`);
-    atualizarMesa(mesaNumero);
-}
+});
