@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo da Mesa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Resumo da Mesa</h1>
+    </header>
+
+    <div id="resumo-mesa">
+        <h2>Mesa <span id="mesa-numero"></span></h2>
+        <ul id="pedidos-lista"></ul>
+        <p><strong>Valor Total:</strong> R$ <span id="valor-total"></span></p>
+    </div>
+
+    <script>
+        // Função para pegar o número da mesa da URL
+        function getMesaNumero() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('mesa') || 'Desconhecida';
+        }
+
+        // Carregar o resumo da mesa com base no número da mesa
+        function carregarResumoMesa() {
+            const mesaNumero = getMesaNumero();
+            document.getElementById('mesa-numero').innerText = mesaNumero;
+
+            // Recuperar os dados de pedidos dessa mesa do localStorage (ou de onde estiverem salvos)
+            const pedidos = JSON.parse(localStorage.getItem(`mesa-${mesaNumero}`)) || [];
+            const pedidosLista = document.getElementById('pedidos-lista');
+            const valorTotal = pedidos.reduce((total, pedido) => total + pedido.preco * pedido.quantidade, 0);
+
+            pedidos.forEach(pedido => {
+                const li = document.createElement('li');
+                li.innerText = `${pedido.quantidade}x ${pedido.nome} - R$ ${(pedido.preco * pedido.quantidade).toFixed(2)}`;
+                pedidosLista.appendChild(li);
+            });
+
+            document.getElementById('valor-total').innerText = valorTotal.toFixed(2);
+        }
+
+        // Chama a função para carregar os dados ao carregar a página
+        window.onload = carregarResumoMesa;
+    </script>
+</body>
+</html>
